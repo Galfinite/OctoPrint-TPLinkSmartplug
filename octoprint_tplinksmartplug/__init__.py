@@ -225,7 +225,7 @@ class tplinksmartplugPlugin(octoprint.plugin.SettingsPlugin,
 						t = threading.Timer(int(plug["gcodeOnDelay"]),self.turn_on,args=[plugip])
 						t.start()
 				except Exception as e:
-					self._tplinksmartplug_logger.debug("Caught an exception: ".str(e))
+					self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e,traceback.format_exc()))
 				return
 			elif cmd.startswith("M81"):
 				try:
@@ -237,7 +237,7 @@ class tplinksmartplugPlugin(octoprint.plugin.SettingsPlugin,
 						t = threading.Timer(int(plug["gcodeOffDelay"]),self.turn_off,args=[plugip])
 						t.start()
 				except Exception as e:
-					self._tplinksmartplug_logger.debug("Caught an exception: ".str(e))
+					self._logger.info("Caught an exception {0}\nTraceback:{1}".format(e,traceback.format_exc()))
 				return
 			else:
 				return
