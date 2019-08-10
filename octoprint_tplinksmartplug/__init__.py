@@ -215,22 +215,28 @@ class tplinksmartplugPlugin(octoprint.plugin.SettingsPlugin,
 	def processGCODE(self, comm_instance, phase, cmd, cmd_type, gcode, *args, **kwargs):
 		if gcode:
 			if cmd.startswith("M80"):			
-				plugip = re.sub(r'^M80\s?', '', cmd)
-				self._tplinksmartplug_logger.debug("Received M80 command, attempting power on of %s." % plugip)
-				plug = self.plug_search(self._settings.get(["arrSmartplugs"]),"ip",plugip)
-				self._tplinksmartplug_logger.debug(plug)
-				if plug["gcodeEnabled"]:
-					t = threading.Timer(int(plug["gcodeOnDelay"]),self.turn_on,args=[plugip])
-					t.start()
+				try:
+					plugip = re.sub(r'^M80\s?', '', cmd)
+					self._tplinksmartplug_logger.debug("Received M80 command, attempting power on of %s." % plugip)
+					plug = self.plug_search(self._settings.get(["arrSmartplugs"]),"ip",plugip)
+					self._tplinksmartplug_logger.debug(plug)
+					if plug["gcodeEnabled"]:
+						t = threading.Timer(int(plug["gcodeOnDelay"]),self.turn_on,args=[plugip])
+						t.start()
+				except Exception as e:
+					self._tplinksmartplug_logger.debug("Caught an exception {0}\nTraceback:{1}".format(e,traceback.format_exc()))
 				return
 			elif cmd.startswith("M81"):
-				plugip = re.sub(r'^M81\s?', '', cmd)
-				self._tplinksmartplug_logger.debug("Received M81 command, attempting power off of %s." % plugip)
-				plug = self.plug_search(self._settings.get(["arrSmartplugs"]),"ip",plugip)
-				self._tplinksmartplug_logger.debug(plug)
-				if plug["gcodeEnabled"]:
-					t = threading.Timer(int(plug["gcodeOffDelay"]),self.turn_off,args=[plugip])
-					t.start()
+				try:
+					plugip = re.sub(r'^M81\s?', '', cmd)
+					self._tplinksmartplug_logger.debug("Received M81 command, attempting power off of %s." % plugip)
+					plug = self.plug_search(self._settings.get(["arrSmartplugs"]),"ip",plugip)
+					self._tplinksmartplug_logger.debug(plug)
+					if plug["gcodeEnabled"]:
+						t = threading.Timer(int(plug["gcodeOffDelay"]),self.turn_off,args=[plugip])
+						t.start()
+				except Exception as e:
+					self._tplinksmartplug_logger.debug("Caught an exception {0}\nTraceback:{1}".format(e,traceback.format_exc()))
 				return
 			else:
 				return
