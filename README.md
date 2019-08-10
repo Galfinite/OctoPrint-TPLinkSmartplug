@@ -14,7 +14,7 @@ Work inspired by [OctoPrint-PSUControl](https://github.com/kantlivelong/OctoPrin
 Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
 or manually using this URL:
 
-    https://github.com/jneilliii/OctoPrint-TPLinkSmartplug/archive/master.zip
+    https://github.com/galfinite/OctoPrint-TPLinkSmartplug/archive/master.zip
 
 
 ## Configuration
